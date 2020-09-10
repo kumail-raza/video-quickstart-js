@@ -87,7 +87,7 @@ async function selectAndJoinRoom(error = null) {
 
   try {
     // Fetch an AccessToken to join the Room.
-    const response = await fetch(`/token?identity=${identity}`);
+    const response = await fetch(`/qstwi/token?identity=${identity}`);
 
     // Extract the AccessToken from the Response.
     const token = await response.text();
