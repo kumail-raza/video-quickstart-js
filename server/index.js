@@ -39,22 +39,22 @@ const app = express();
 
 ].forEach(example => {
   const examplePath = path.join(__dirname, `../examples/${example}/public`);
-  app.use(`/${example}`, express.static(examplePath));
+  app.use(`/qstwi/${example}`, express.static(examplePath));
 });
 
 // Set up the path for the quickstart.
 const quickstartPath = path.join(__dirname, '../quickstart/public');
-app.use('/quickstart', express.static(quickstartPath));
+app.use('/qstwi/quickstart', express.static(quickstartPath));
 
 // Set up the path for the examples page.
 const examplesPath = path.join(__dirname, '../examples');
-app.use('/examples', express.static(examplesPath));
+app.use('/qstwi/examples', express.static(examplesPath));
 
 /**
  * Default to the Quick Start application.
  */
 app.get('/', (request, response) => {
-  response.redirect('/quickstart');
+  response.redirect('/qstwi/quickstart');
 });
 
 /**
@@ -62,7 +62,7 @@ app.get('/', (request, response) => {
  * username for the client requesting a token, and takes a device ID as a query
  * parameter.
  */
-app.get('/token', function(request, response) {
+app.get('/qstwi/token', function(request, response) {
   const { identity } = request.query;
 
   // Create an access token which we will sign and return to the client,
