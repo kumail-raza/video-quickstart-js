@@ -169,6 +169,8 @@ function participantConnected(participant, room) {
 
   // Handle theTrackPublications that will be published by the Participant later.
   participant.on('trackPublished', publication => {
+
+    console.log('KR-TW :: tw-event:trackPublished');
     trackPublished(publication, participant);
   });
 }
@@ -203,11 +205,14 @@ function trackPublished(publication, participant) {
 
   // Once the TrackPublication is subscribed to, attach the Track to the DOM.
   publication.on('subscribed', track => {
+
+    console.log('KR-TW :: tw-event:publicationSubscribed');
     attachTrack(track, participant);
   });
 
   // Once the TrackPublication is unsubscribed from, detach the Track from the DOM.
   publication.on('unsubscribed', track => {
+    console.log('KR-TW :: tw-event:publicationUnsubscribed');
     detachTrack(track, participant);
   });
 }
@@ -237,14 +242,26 @@ async function joinRoom(token, connectOptions) {
 
   // Subscribe to the media published by RemoteParticipants joining the Room later.
   room.on('participantConnected', participant => {
+    console.log('KR-TW :: tw-event:participantConnected');
     participantConnected(participant, room);
   });
 
   // Handle a disconnected RemoteParticipant.
   room.on('participantDisconnected', participant => {
+    console.log('KR-TW :: tw-event:participantDisconnected');
     participantDisconnected(participant, room);
   });
 
+
+  // When a Participant's Track is subscribed to, attach it to the DOM.
+  room.on('trackSubscribed', (track, publication, participant) => {
+    console.log('KR-TW :: tw-event:trackSubscribed:' + participant.identity + ': track(' + track.kind + ', ' + track.sid + ')');
+
+  });
+
+  room.on('trackUnsubscribed', (track, publication, participant) => {
+    console.log('KR-TW :: tw-event:trackUnsubscribed:' + participant.identity + ': track(' + track.kind + ', ' + track.sid + ')');
+  });
   // Set the current active Participant.
   setCurrentActiveParticipant(room);
 
